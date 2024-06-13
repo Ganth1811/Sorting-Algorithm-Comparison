@@ -1,6 +1,6 @@
 #include "sorting_algorithm.h"
 
-void selectionSort(vector<double> &v){
+void selectionSort(vector<type> &v){
     int n = v.size();
     for (int i = 0; i < n - 1; i++){
         int min = i;

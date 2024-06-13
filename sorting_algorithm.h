@@ -5,14 +5,16 @@
 
 using namespace std;
 
-void bubbleSort(vector<double>&);
-void insertionSort(vector<double>&);
-void selectionSort(vector<double>&);
-void mergeSort(vector<double>&);
-void quickSort(vector<double>&);
-void heapSort(vector<double>&);
-void radixSort(vector<double>&);
+using type = int;
 
-void sort(vector<double>&, void sortAlgorithm(vector<double>));
+void bubbleSort(vector<type>&);
+void insertionSort(vector<type>&);
+void selectionSort(vector<type>&);
+void mergeSort(vector<type>&);
+void quickSort(vector<type>&);
+void heapSort(vector<type>&);
+void radixSort(vector<type>&);
+
+void sort(vector<type>&, void sortAlgorithm(vector<type>));
 
 
