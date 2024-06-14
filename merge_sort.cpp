@@ -27,7 +27,7 @@ void merge(vector<type> a, vector<type> b, vector<type>& v,
 	}
 }
 
-void MergeSort(vector<type>& v, ull& comparision_count) {
+void mergeSort(vector<type>& v, ull& comparision_count) {
 	int size = v.size();
 
 	if (size > 1) {

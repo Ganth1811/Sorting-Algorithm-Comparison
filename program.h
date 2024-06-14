@@ -28,7 +28,7 @@ using namespace std;
 #define OUT_COMPARISON 1 << 6
 #define OUT_BOTH 	OUT_TIME | OUT_COMPARISON
 
-typedef void (*p_func)(vector<type>&, unsigned long long&);
+typedef void (*p_func)(vector<type>&, ull&);
 typedef int ArgValue;
 
 struct ProgramArguments{

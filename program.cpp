@@ -181,7 +181,7 @@ vector<type> generateDataSet(ArgValue input_order, int input_size) {
 
 void algorithmMode(ProgramArguments prog_args) {
 	vector<type> data_set;
-	unsigned long long comp_count;
+	ull comp_count;
 	p_func sort_func = prog_args.sort_funcs[0];
 
 	cout << "Algorithm: " << prog_args.algo_name[0] << endl;
@@ -248,7 +248,7 @@ void algorithmMode(ProgramArguments prog_args) {
 
 void comparisonMode(ProgramArguments prog_args) {
 	vector<type> data_set;
-	unsigned long long comp_count[2] {0};
+	ull comp_count[2] {0};
 	double run_time[2];
 
 	cout << "Algorithm: " << prog_args.algo_name[0] << " | " << prog_args.algo_name[1] << endl;
