@@ -9,13 +9,13 @@ using namespace std;
 
 using type = int;
 
-void bubbleSort(vector<type>&, int&);
-void insertionSort(vector<type>&, int&);
-void selectionSort(vector<type>&, int&);
-void mergeSort(vector<type>&, int&);
-void quickSort(vector<type>&, int&);
-void heapSort(vector<type>&, int&);
-void radixSort(vector<type>&, int&);
+void bubbleSort(vector<type>&, unsigned long long&);
+void insertionSort(vector<type>&, unsigned long long&);
+void selectionSort(vector<type>&, unsigned long long&);
+void mergeSort(vector<type>&, unsigned long long&);
+void quickSort(vector<type>&, unsigned long long&);
+void heapSort(vector<type>&, unsigned long long&);
+void radixSort(vector<type>&, unsigned long long&);
 
 
 

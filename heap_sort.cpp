@@ -1,6 +1,6 @@
 #include "sorting_algorithm.h"
 
-void heapify(vector<type>& v, int heap_size, int i, int& comparision_count) {
+void heapify(vector<type>& v, int heap_size, int i, unsigned long long& comparision_count) {
 	int left = 2 * i + 1;
 	int right = 2 * i + 2;
 	int largest = i;
@@ -19,13 +19,13 @@ void heapify(vector<type>& v, int heap_size, int i, int& comparision_count) {
 	}
 }
 
-void buildHeap(vector<type>& v, int heap_size, int& comparision_count) {
+void buildHeap(vector<type>& v, int heap_size, unsigned long long& comparision_count) {
 	for (int i = heap_size / 2 - 1; ++comparision_count && i >= 0; i--) {
 		heapify(v, heap_size, i, comparision_count);
 	}
 }
 
-void heapSort(vector<type>& v, int& comparision_count) {
+void heapSort(vector<type>& v, unsigned long long& comparision_count) {
 	int heap_size = v.size();
 
 	buildHeap(v, heap_size, comparision_count);

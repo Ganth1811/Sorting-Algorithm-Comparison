@@ -1,6 +1,6 @@
 #include "sorting_algorithm.h"
 
-void selectionSort(vector<type>& v, int& comparision_count) {
+void selectionSort(vector<type>& v, unsigned long long& comparision_count) {
 	for (int i = 0; ++comparision_count && i < v.size() - 1; i++) {
 		int min_id = i;
 

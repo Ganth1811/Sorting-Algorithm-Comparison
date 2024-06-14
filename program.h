@@ -1,44 +1,51 @@
 #pragma once
 
+#include <iostream>
 #include <unordered_map>
 #include <string>
+#include <fstream>
+#include <chrono>
 #include "sorting_algorithm.h"
+#include "DataGenerator.h"
 
 using namespace std;
 
-#define ALGORITHM_MODE 1
-#define COMPARISON_MODE 2
+#define DEFAULT 0
 
-#define ORDER_RANDOM 11
-#define ORDER_NSORTED 12
-#define ORDER_SORTED 13
-#define ORDER_REVERSE 14
-#define ORDER_ALL 15
+#define ALGORITHM_MODE 101
+#define COMPARISON_MODE 102
 
-#define OUT_TIME 21
-#define OUT_COMPARISON 22
-#define OUT_BOTH 23
+#define INP_FILE 103
+#define INP_GENERATED 104
 
-#define INP_FILE 31
-#define INP_GENERATED 32
+#define ORDER_RANDOM 1 << 1
+#define ORDER_NSORTED 1 << 2
+#define ORDER_SORTED 1 << 3
+#define ORDER_REVERSE 1 << 4
+#define ORDER_ALL 	ORDER_RANDOM | ORDER_NSORTED | ORDER_SORTED | ORDER_REVERSE
 
-typedef void (*p_func)(vector<type>&);
+#define OUT_TIME 1 << 5
+#define OUT_COMPARISON 1 << 6
+#define OUT_BOTH 	OUT_TIME | OUT_COMPARISON
+
+typedef void (*p_func)(vector<type>&, unsigned long long&);
 typedef int ArgValue;
 
 struct ProgramArguments{
-	ArgValue mode = NULL;
+	ArgValue mode = DEFAULT;
 
-	ArgValue input_mode = NULL;
-	ArgValue input_size = 0;
+	ArgValue input_mode = DEFAULT;
+	int input_size = 0;
 	ArgValue input_order = ORDER_ALL;
 	string input_file = "";
 
-	ArgValue output_para = NULL;
+	ArgValue output_para = DEFAULT;
 
 	int n_sort_algos = 0;
-	p_func sort_algos[2] = {nullptr};
-	string sort_name[2] = {""};
+	p_func sort_funcs[2] = {nullptr};
+	string algo_name[2] = {""};
 };
 
 ProgramArguments processArguments(int argc, char** argv);
-void performSort
+void runProgram(ProgramArguments prog_args);
+
