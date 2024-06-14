@@ -1,32 +1,37 @@
 #include "sorting_algorithm.h"
 
-void countingSort(vector<type>& v, int exp) {
-    vector<type> res(v.size());
-    vector<int> count(10, 0);
+void countingSort(vector<type>& v, int exp, int& comparision_count) {
+	int size = v.size();
+	vector<type> res(size);
+	vector<int> count(10, 0);
 
-    for (int i = 0; i < v.size(); i++) {
-        count[(v[i] / exp) % 10]++;
-    }
+	for (int i = 0; ++comparision_count && i < size; i++) {
+		count[(v[i] / exp) % 10]++;
+	}
 
-    for (int i = 1; i < 10; i++) {
-        count[i] = count[i - 1] + count[i];
-    }
+	for (int i = 1; ++comparision_count && i < 10; i++) {
+		count[i] = count[i - 1] + count[i];
+	}
 
-    for (int i = v.size() - 1; i >= 0; i--) {
-        res[count[(v[i] / exp) % 10] - 1] = v[i];
-        count[(v[i] / exp) % 10]--;
-    }
+	for (int i = size - 1; ++comparision_count && i >= 0; i--) {
+		res[count[(v[i] / exp) % 10] - 1] = v[i];
+		count[(v[i] / exp) % 10]--;
+	}
 
-    swap(res, v);
+	swap(res, v);
 }
 
-void radixSort(vector<type>& v) {
-    int m = v[0]; // Assume that input is all nonnegative intergers
-    for (int i = 1; i < v.size(); i++) {
-        if (m < v[i]) m = v[i];
-    }
+void radixSort(vector<type>& v, int& comparision_count) {
+	int size = v.size();
+	int max_element = v[0];	 // Assume that input is all nonnegative intergers
 
-    for (int exp = 1; m / exp > 0; exp *= 10) {
-        countingSort(v, exp);
-    }
+	for (int i = 1; ++comparision_count && i < size; i++) {
+		if (++comparision_count && max_element < v[i]) {
+			max_element = v[i];
+		}
+	}
+
+	for (int exp = 1; ++comparision_count && max_element / exp > 0; exp *= 10) {
+		countingSort(v, exp, comparision_count);
+	}
 }

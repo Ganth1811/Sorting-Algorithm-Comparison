@@ -7,14 +7,13 @@ using namespace std;
 
 using type = int;
 
-void bubbleSort(vector<type>&);
-void insertionSort(vector<type>&);
-void selectionSort(vector<type>&);
-void mergeSort(vector<type>&);
-void quickSort(vector<type>&);
-void heapSort(vector<type>&);
-void radixSort(vector<type>&);
+void bubbleSort(vector<type>&, int&);
+void insertionSort(vector<type>&, int&);
+void selectionSort(vector<type>&, int&);
+void mergeSort(vector<type>&, int&);
+void quickSort(vector<type>&, int&);
+void heapSort(vector<type>&, int&);
+void radixSort(vector<type>&, int&);
 
-void sort(vector<type>&, void sortAlgorithm(vector<type>));
 
 

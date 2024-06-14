@@ -1,16 +1,17 @@
 #include "sorting_algorithm.h"
 
-void insertionSort(vector<type>& v) {
-    int n = v.size();
-    for (int i = 1; i < n; i++) {
-        int key = v[i];
-        int j = i - 1;
+void insertionSort(vector<type>& v, int& comparision_count) {
+	int size = v.size();
 
-        while (j >= 0 &&  v[j] > key) {
-            v[j + 1] = v[j];
-            j = j - 1;
-        }
+	for (int i = 1; ++comparision_count && i < size; i++) {
+		int key = v[i];
+		int j = i - 1;
 
-        v[j + 1] = key;
-    }
+		while (++comparision_count && j >= 0 && ++comparision_count &&
+			   v[j] > key) {
+			v[j + 1] = v[j];
+			j = j - 1;
+		}
+		v[j + 1] = key;
+	}
 }
