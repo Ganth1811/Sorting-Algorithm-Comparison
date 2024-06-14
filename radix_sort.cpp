@@ -1,6 +1,6 @@
 #include "sorting_algorithm.h"
 
-void countingSort(vector<type>& v, int exp, int& comparision_count) {
+void countingSort(vector<type>& v, int exp, ull& comparision_count) {
 	int size = v.size();
 	vector<type> res(size);
 	vector<int> count(10, 0);
@@ -21,7 +21,7 @@ void countingSort(vector<type>& v, int exp, int& comparision_count) {
 	swap(res, v);
 }
 
-void radixSort(vector<type>& v, int& comparision_count) {
+void radixSort(vector<type>& v, ull& comparision_count) {
 	int size = v.size();
 	int max_element = v[0];	 // Assume that input is all nonnegative intergers
 

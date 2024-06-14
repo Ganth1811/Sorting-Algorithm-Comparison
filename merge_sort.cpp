@@ -1,7 +1,7 @@
 #include "sorting_algorithm.h"
 
 void merge(vector<type> a, vector<type> b, vector<type>& v,
-		   int& comparision_count) {
+		   ull& comparision_count) {
 	v.clear();
 
 	int i = 0, j = 0;
@@ -27,7 +27,7 @@ void merge(vector<type> a, vector<type> b, vector<type>& v,
 	}
 }
 
-void MergeSort(vector<type>& v, int& comparision_count) {
+void MergeSort(vector<type>& v, ull& comparision_count) {
 	int size = v.size();
 
 	if (size > 1) {

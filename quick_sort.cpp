@@ -1,6 +1,6 @@
 #include "sorting_algorithm.h"
 
-int partition(vector<type>& v, int left, int right, int& comparision_count) {
+int partition(vector<type>& v, int left, int right, ull& comparision_count) {
 	int mid = (left + right) / 2;
 
 	swap(v[left], v[mid]);
@@ -18,7 +18,7 @@ int partition(vector<type>& v, int left, int right, int& comparision_count) {
 	return pivotIndex;
 }
 
-void quickSort(vector<type>& v, int left, int right, int& comparision_count) {
+void quickSort(vector<type>& v, int left, int right, ull& comparision_count) {
 	if (++comparision_count && left < right) {
 		int pivot = partition(v, left, right, comparision_count);
 
@@ -27,6 +27,6 @@ void quickSort(vector<type>& v, int left, int right, int& comparision_count) {
 	}
 }
 
-void quickSort(vector<type>& v, int& comparision_count) {
+void quickSort(vector<type>& v, ull& comparision_count) {
 	quickSort(v, 0, v.size() - 1, comparision_count);
 }
