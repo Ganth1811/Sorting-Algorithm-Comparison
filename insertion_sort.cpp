@@ -1,6 +1,6 @@
 #include "sorting_algorithm.h"
 
-void insertionSort(vector<type>& v, unsigned long long& comparision_count) {
+void insertionSort(vector<type>& v, ull& comparision_count) {
 	int size = v.size();
 
 	for (int i = 1; ++comparision_count && i < size; i++) {

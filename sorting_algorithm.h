@@ -8,14 +8,15 @@
 using namespace std;
 
 using type = int;
+typedef unsigned long long ull;
 
-void bubbleSort(vector<type>&, unsigned long long&);
-void insertionSort(vector<type>&, unsigned long long&);
-void selectionSort(vector<type>&, unsigned long long&);
-void mergeSort(vector<type>&, unsigned long long&);
-void quickSort(vector<type>&, unsigned long long&);
-void heapSort(vector<type>&, unsigned long long&);
-void radixSort(vector<type>&, unsigned long long&);
+void bubbleSort(vector<type>&, ull&);
+void insertionSort(vector<type>&, ull&);
+void selectionSort(vector<type>&, ull&);
+void mergeSort(vector<type>&, ull&);
+void quickSort(vector<type>&, ull&);
+void heapSort(vector<type>&, ull&);
+void radixSort(vector<type>&, ull&);
 
 
 
