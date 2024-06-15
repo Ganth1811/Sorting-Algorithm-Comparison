@@ -195,13 +195,14 @@ void algorithmMode(ProgramArguments prog_args) {
 		cout << "--------------------------" << endl;
 
 		// run sort
-		clock_t start = clock();
+		auto start = chrono::high_resolution_clock::now();
 		sort_func(data_set, comp_count);
-		clock_t end = clock();
+		auto end = chrono::high_resolution_clock::now();
+		std::chrono::duration<double> run_time = end - start;
 
 		// output
 		if (prog_args.output_para & OUT_TIME)
-			cout << "Running time: " << (end - start) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+			cout << "Running time: " << run_time.count() << "s" << endl;
 		if (prog_args.output_para & OUT_COMPARISON)
 			cout << "Comparisons: " << comp_count << endl;
 
@@ -210,7 +211,7 @@ void algorithmMode(ProgramArguments prog_args) {
 	}
 
 	else if (prog_args.input_mode == INP_GENERATED) {	// genarate input, for command 2 and 3
-		cout << "Input size: " << prog_args.input_size << endl << endl;
+		cout << "Input size: " << prog_args.input_size << endl;
 		ArgValue order_types[4] = {ORDER_RANDOM, ORDER_NSORTED, ORDER_SORTED, ORDER_REVERSE};
 		string order_names[4] = {"Randomized", "Nearly sorted", "Sorted", "Reversed"};
 
@@ -222,17 +223,18 @@ void algorithmMode(ProgramArguments prog_args) {
 				comp_count = 0;
 
 				// write data set
-				if (prog_args.input_order != ORDER_ALL) writeFile("input.txt", data_set);
-				else writeFile(string("input_") + to_string(i+1) + string(".txt"), data_set);
+				if (prog_args.input_order == ORDER_ALL) writeFile(string("input_") + to_string(i+1) + string(".txt"), data_set);
+				else writeFile("input.txt", data_set);
 
 				// run sort
-				clock_t start = clock();
+				auto start = chrono::high_resolution_clock::now();
 				sort_func(data_set, comp_count);
-				clock_t end = clock();
+				auto end = chrono::high_resolution_clock::now();
+				std::chrono::duration<double> run_time = end - start;
 
 				// output
 				if (prog_args.output_para & OUT_TIME)
-					cout << "Running time: " << (end - start) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+					cout << "Running time: " << run_time.count() << "s" << endl;
 				if (prog_args.output_para & OUT_COMPARISON)
 					cout << "Comparisons: " << comp_count << endl;
 				
@@ -249,7 +251,7 @@ void algorithmMode(ProgramArguments prog_args) {
 void comparisonMode(ProgramArguments prog_args) {
 	vector<type> data_set;
 	ull comp_count[2] {0};
-	double run_time[2];
+	std::chrono::duration<double> run_time[2];
 
 	cout << "Algorithm: " << prog_args.algo_name[0] << " | " << prog_args.algo_name[1] << endl;
 
@@ -264,14 +266,14 @@ void comparisonMode(ProgramArguments prog_args) {
 		for (int i = 0; i < 2; i++) {
 			comp_count[i] = 0;
 			p_func sort_func = prog_args.sort_funcs[i];
-			clock_t start = clock();
+			auto start = chrono::high_resolution_clock::now();
 			sort_func(data_set, comp_count[i]);
-			clock_t end = clock();
-			run_time[i] = (end - start) * 1.0 / CLOCKS_PER_SEC;
+			auto end = chrono::high_resolution_clock::now();
+			run_time[i] = end - start;
 		}
 
 		// output
-		cout << "Running time: " << run_time[0] << "s | " << run_time[1] << "s" << endl;
+		cout << "Running time: " << run_time[0].count() << "s | " << run_time[1].count() << "s" << endl;
 		cout << "Comparisons: " << comp_count[0] << " | " << comp_count[1] << endl;
 	}
 
@@ -293,14 +295,14 @@ void comparisonMode(ProgramArguments prog_args) {
 				for (int i = 0; i < 2; i++) {
 					comp_count[i] = 0;
 					p_func sort_func = prog_args.sort_funcs[i];
-					clock_t start = clock();
+					auto start = chrono::high_resolution_clock::now();
 					sort_func(data_set, comp_count[i]);
-					clock_t end = clock();
-					run_time[i] = (end - start) * 1.0 / CLOCKS_PER_SEC;
+					auto end = chrono::high_resolution_clock::now();
+					run_time[i] = end - start;
 				}
 
 				// output
-				cout << "Running time: " << run_time[0] << "s | " << run_time[1] << "s" << endl;
+				cout << "Running time: " << run_time[0].count() << "s | " << run_time[1].count() << "s" << endl;
 				cout << "Comparisons: " << comp_count[0] << " | " << comp_count[1] << endl;
 				
 				cout << endl;
