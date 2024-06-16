@@ -18,5 +18,8 @@ void quickSort(vector<type>&, ull&);
 void heapSort(vector<type>&, ull&);
 void radixSort(vector<type>&, ull&);
 
-
+void shakerSort(vector<type>&, ull&);
+void shellSort(vector<type>&, ull&);
+void countingSort(vector<type>&, ull&);
+void flashSort(vector<type>&, ull&);
 

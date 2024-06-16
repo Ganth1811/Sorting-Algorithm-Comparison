@@ -1,41 +1,45 @@
 #include "sorting_algorithm.h"
 
-void merge(vector<type> a, vector<type> b, vector<type>& v,
+void merge(vector<type>& v, int l, int mid, int r,
 		   ull& comparision_count) {
-	v.clear();
+	int left_size = mid - l + 1;
+	int right_size = r - mid;
 
-	int i = 0, j = 0;
-	while (++comparision_count && i < a.size() && ++comparision_count &&
-		   j < b.size()) {
-		if (++comparision_count && a[i] < b[j]) {
-			v.push_back(a[i]);
-			i++;
+	vector<type> left(left_size), right(right_size);
+	for (int i = 0; ++comparision_count && i < left_size; i++) {
+		left[i] = v[l + i];
+	}
+	for (int i = 0; ++comparision_count && i < right_size; i++) {
+		right[i] = v[mid + 1 + i];
+	}
+
+	int i = 0, j = 0, k = l;
+	while (++comparision_count && i < left_size && ++comparision_count && j < right_size) {
+		if (++comparision_count && left[i] <= right[j]) {
+			v[k++] = left[i++];
 		} else {
-			v.push_back(b[j]);
-			j++;
+			v[k++] = right[j++];
 		}
 	}
 
-	while (++comparision_count && i < a.size()) {
-		v.push_back(a[i]);
-		i++;
+	while (++comparision_count && i < left_size) {
+		v[k++] = left[i++];
 	}
 
-	while (++comparision_count && j < b.size()) {
-		v.push_back(b[j]);
-		j++;
+	while (++comparision_count && j < right_size) {
+		v[k++] = right[j++];
 	}
 }
 
+void mergeSort(vector<type>& v, int l, int r, ull& comparision_count) {
+	if (l >= r) return;
+	int mid = (l + r) / 2;
+	
+	mergeSort(v, l, mid, comparision_count);
+	mergeSort(v, mid + 1, r, comparision_count);
+	merge(v, l, mid, r, comparision_count);
+}
+
 void mergeSort(vector<type>& v, ull& comparision_count) {
-	int size = v.size();
-
-	if (size > 1) {
-		vector<type> a(v.begin(), v.begin() + size / 2);
-		vector<type> b(v.begin() + size / 2, v.end());
-
-		mergeSort(a, comparision_count);
-		mergeSort(b, comparision_count);
-		merge(a, b, v, comparision_count);
-	}
+	mergeSort(v, 0, v.size() - 1, comparision_count);
 }

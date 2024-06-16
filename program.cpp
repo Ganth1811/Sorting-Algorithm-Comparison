@@ -12,7 +12,11 @@ unordered_map<string, p_func> algos_map = {
 	{"heap-sort", heapSort},
 	{"merge-sort", mergeSort},
 	{"quick-sort", quickSort},
-	{"radix-sort", radixSort}
+	{"radix-sort", radixSort},
+	{"shaker-sort", shakerSort},
+	{"shell-sort", shellSort},
+	{"counting-sort", countingSort},
+	{"flash-sort", flashSort}
 };
 
 unordered_map<string, ArgValue> order_map = {
