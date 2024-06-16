@@ -61,7 +61,16 @@ string getSortName(string argv) {
 		name.replace(pos, 1, 1, ' ');
 		pos = name.find('-');
 	}
+	name[0] -= 32;
 	return name;
+}
+
+string addComma(ull n) {
+	string out = to_string(n);
+	for(int i = out.length() - 3; i > 0; i-=3) {
+		out.insert(i, 1, ',');
+	}
+	return out;
 }
 
 ProgramArguments processArguments(int argc, char** argv) {
@@ -77,7 +86,6 @@ ProgramArguments processArguments(int argc, char** argv) {
 
 	// get algorithm
 	if (algos_map.find(string(argv[argv_idx])) != algos_map.end()) {
-		prog_args.n_sort_algos++;
 		prog_args.sort_funcs[0] = algos_map[argv[argv_idx]];
 		prog_args.algo_name[0] = getSortName(argv[argv_idx]);
 	}
@@ -86,7 +94,6 @@ ProgramArguments processArguments(int argc, char** argv) {
 	// get second algorithm if it is comparison mode
 	if (prog_args.mode == COMPARISON_MODE) {
 		if (algos_map.find(string(argv[argv_idx])) != algos_map.end()) {
-			prog_args.n_sort_algos++;
 			prog_args.sort_funcs[1] = algos_map[argv[argv_idx]];
 			prog_args.algo_name[1] = getSortName(argv[argv_idx]);
 		}
@@ -194,7 +201,7 @@ void algorithmMode(ProgramArguments prog_args) {
 		data_set = readFile(prog_args.input_file);
 		comp_count = 0;
 
-		cout << "Input file: " << prog_args.input_file << endl;
+		cout << "Input file: " << prog_args.input_file << endl << endl;
 		cout << "Input size: " << data_set.size() << endl;
 		cout << "--------------------------" << endl;
 
@@ -208,14 +215,14 @@ void algorithmMode(ProgramArguments prog_args) {
 		if (prog_args.output_para & OUT_TIME)
 			cout << "Running time: " << run_time.count() << "s" << endl;
 		if (prog_args.output_para & OUT_COMPARISON)
-			cout << "Comparisons: " << comp_count << endl;
+			cout << "Comparisons: " << addComma(comp_count) << endl;
 
 		// write sorted data
 		writeFile("output.txt", data_set);
 	}
 
 	else if (prog_args.input_mode == INP_GENERATED) {	// genarate input, for command 2 and 3
-		cout << "Input size: " << prog_args.input_size << endl;
+		cout << "Input size: " << prog_args.input_size << endl << endl;
 		ArgValue order_types[4] = {ORDER_RANDOM, ORDER_NSORTED, ORDER_SORTED, ORDER_REVERSE};
 		string order_names[4] = {"Randomized", "Nearly sorted", "Sorted", "Reversed"};
 
@@ -240,7 +247,7 @@ void algorithmMode(ProgramArguments prog_args) {
 				if (prog_args.output_para & OUT_TIME)
 					cout << "Running time: " << run_time.count() << "s" << endl;
 				if (prog_args.output_para & OUT_COMPARISON)
-					cout << "Comparisons: " << comp_count << endl;
+					cout << "Comparisons: " << addComma(comp_count) << endl;
 				
 				cout << endl;
 
@@ -253,32 +260,34 @@ void algorithmMode(ProgramArguments prog_args) {
 
 
 void comparisonMode(ProgramArguments prog_args) {
-	vector<type> data_set;
+	vector<type> original_data_set;		// store the original data set
+	vector<type> copy_data_set;			// store a copy of the original data set for the sorting algorithm to sort it
 	ull comp_count[2] {0};
 	std::chrono::duration<double> run_time[2];
 
 	cout << "Algorithm: " << prog_args.algo_name[0] << " | " << prog_args.algo_name[1] << endl;
 
 	if (prog_args.input_mode == INP_FILE) {		// input file, for command 4
-		data_set = readFile(prog_args.input_file);
+		original_data_set = readFile(prog_args.input_file);
 
-		cout << "Input file: " << prog_args.input_file << endl;
-		cout << "Input size: " << data_set.size() << endl;
+		cout << "Input file: " << prog_args.input_file << endl << endl;
+		cout << "Input size: " << original_data_set.size() << endl;
 		cout << "--------------------------" << endl;
 
 		// run sort
 		for (int i = 0; i < 2; i++) {
+			copy_data_set = original_data_set;
 			comp_count[i] = 0;
 			p_func sort_func = prog_args.sort_funcs[i];
 			auto start = chrono::high_resolution_clock::now();
-			sort_func(data_set, comp_count[i]);
+			sort_func(copy_data_set, comp_count[i]);
 			auto end = chrono::high_resolution_clock::now();
 			run_time[i] = end - start;
 		}
 
 		// output
 		cout << "Running time: " << run_time[0].count() << "s | " << run_time[1].count() << "s" << endl;
-		cout << "Comparisons: " << comp_count[0] << " | " << comp_count[1] << endl;
+		cout << "Comparisons: " << addComma(comp_count[0]) << " | " << addComma(comp_count[1]) << endl;
 	}
 
 	else if (prog_args.input_mode == INP_GENERATED) {	// genarate input, for command 5
@@ -290,24 +299,25 @@ void comparisonMode(ProgramArguments prog_args) {
 			if (prog_args.input_order & order_types[i]) {	// the order type indicator bit is 1 in input_order
 				cout << "Input order: " << order_names[i] << endl;
 				cout << "--------------------------" << endl;
-				data_set = generateDataSet(order_types[i], prog_args.input_size);
+				original_data_set = generateDataSet(order_types[i], prog_args.input_size);
 
 				// write data set
-				writeFile("input.txt", data_set);
+				writeFile("input.txt", original_data_set);
 
 				// run sort
 				for (int i = 0; i < 2; i++) {
+					copy_data_set = original_data_set;
 					comp_count[i] = 0;
 					p_func sort_func = prog_args.sort_funcs[i];
 					auto start = chrono::high_resolution_clock::now();
-					sort_func(data_set, comp_count[i]);
+					sort_func(copy_data_set, comp_count[i]);
 					auto end = chrono::high_resolution_clock::now();
 					run_time[i] = end - start;
 				}
 
 				// output
 				cout << "Running time: " << run_time[0].count() << "s | " << run_time[1].count() << "s" << endl;
-				cout << "Comparisons: " << comp_count[0] << " | " << comp_count[1] << endl;
+				cout << "Comparisons: " << addComma(comp_count[0]) << " | " << addComma(comp_count[1]) << endl;
 				
 				cout << endl;
 				break;	// run 1 order only

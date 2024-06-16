@@ -1,3 +1,8 @@
 
 *.exe
-*.txt
+input.txt
+input_1.txt
+input_2.txt
+input_3.txt
+input_4.txt
+output.txt

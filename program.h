@@ -41,7 +41,6 @@ struct ProgramArguments{
 
 	ArgValue output_para = DEFAULT;
 
-	int n_sort_algos = 0;
 	p_func sort_funcs[2] = {nullptr};
 	string algo_name[2] = {""};
 };
