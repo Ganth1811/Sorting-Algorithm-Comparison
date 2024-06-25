@@ -13,7 +13,6 @@ void flashSort(vector<type>& v, ull& comparision_count) {
 			max = i;
 		}
 	}
-	if (++comparision_count && min == v[max]) return;
 
 	double c = (double) (m - 1) / (v[max] - min);
 	for (int i = 0; ++comparision_count && i < size; i++) {
@@ -33,7 +32,6 @@ void flashSort(vector<type>& v, ull& comparision_count) {
 			i++;
 			k = (v[i] - min) * c;
 		}
-        if (++comparision_count && k < 0) break;
 
 		int flash = v[i];
 		while (++comparision_count && i != L[k]) {
