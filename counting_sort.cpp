@@ -21,6 +21,7 @@ void countingSort(vector<type>& v, ull& comparision_count) {
 	vector<type> res(size);
 	for (int i = size - 1; ++comparision_count && i >= 0; i--) {
 		res[count[v[i]] - 1] = v[i];
+        count[v[i]]--;
 	}
 
 	swap(res, v);
