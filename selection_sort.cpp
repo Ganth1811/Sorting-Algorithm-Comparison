@@ -17,3 +17,21 @@ void selectionSort(vector<type>& v, ull& comparision_count) {
         }
 	}
 }
+
+void selectionSort(vector<type>& v) {
+	int size = v.size();
+	
+	for (int i = 0; i < size - 1; i++) {
+		int min_id = i;
+
+		for (int j = i + 1; j < size; j++) {
+			if (v[j] < v[min_id]) {
+                min_id = j;
+            }
+		}
+
+		if (min_id != i) {
+            swap(v[i], v[min_id]);
+        }
+	}
+}

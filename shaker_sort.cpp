@@ -28,3 +28,32 @@ void shakerSort(vector<type>& v, ull& comparision_count) {
         left++;
     }
 }
+
+void shakerSort(vector<type>& v) {
+    bool swapped = true;
+    int left = 0, right = v.size() - 1;
+
+    while (swapped) {
+        swapped = false;
+
+        for (int i = left; i < right; i++) {
+            if (v[i] > v[i + 1]) {
+                swap(v[i], v[i + 1]);
+                swapped = true;
+            }
+        }
+
+        if (!swapped) break;
+        swapped = false;
+
+        --right;
+        for (int i = right; i >= left; i--) {
+            if (v[i] > v[i + 1]) {
+                swap(v[i], v[i + 1]);
+                swapped = true;
+            }
+        }
+
+        left++;
+    }
+}
