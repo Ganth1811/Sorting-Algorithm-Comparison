@@ -28,7 +28,8 @@ using namespace std;
 #define OUT_COMPARISON 1 << 6
 #define OUT_BOTH 	OUT_TIME | OUT_COMPARISON
 
-typedef void (*p_func)(vector<type>&, ull&);
+typedef void (*p_func_comp)(vector<type>&, ull&);
+typedef void (*p_func_time)(vector<type>&);
 typedef int ArgValue;
 
 struct ProgramArguments{
@@ -41,7 +42,8 @@ struct ProgramArguments{
 
 	ArgValue output_para = DEFAULT;
 
-	p_func sort_funcs[2] = {nullptr};
+	p_func_comp sort_funcs_comp[2] = {nullptr};
+	p_func_time sort_funcs_time[2] = {nullptr};
 	string algo_name[2] = {""};
 };
 

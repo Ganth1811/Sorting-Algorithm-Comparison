@@ -5,7 +5,21 @@ unordered_map<string, ArgValue> mode_map = {
 	{"-c", COMPARISON_MODE},
 };
 
-unordered_map<string, p_func> algos_map = {
+unordered_map<string, p_func_comp> algos_comp_map = {
+	{"selection-sort", selectionSort},
+	{"insertion-sort", insertionSort},
+	{"bubble-sort", bubbleSort},
+	{"heap-sort", heapSort},
+	{"merge-sort", mergeSort},
+	{"quick-sort", quickSort},
+	{"radix-sort", radixSort},
+	{"shaker-sort", shakerSort},
+	{"shell-sort", shellSort},
+	{"counting-sort", countingSort},
+	{"flash-sort", flashSort}
+};
+
+unordered_map<string, p_func_time> algos_time_map = {
 	{"selection-sort", selectionSort},
 	{"insertion-sort", insertionSort},
 	{"bubble-sort", bubbleSort},
@@ -85,16 +99,18 @@ ProgramArguments processArguments(int argc, char** argv) {
 	argv_idx++;
 
 	// get algorithm
-	if (algos_map.find(string(argv[argv_idx])) != algos_map.end()) {
-		prog_args.sort_funcs[0] = algos_map[argv[argv_idx]];
+	if (algos_comp_map.find(string(argv[argv_idx])) != algos_comp_map.end()) {
+		prog_args.sort_funcs_comp[0] = algos_comp_map[argv[argv_idx]];
+		prog_args.sort_funcs_time[0] = algos_time_map[argv[argv_idx]];
 		prog_args.algo_name[0] = getSortName(argv[argv_idx]);
 	}
 	argv_idx++;
 
 	// get second algorithm if it is comparison mode
 	if (prog_args.mode == COMPARISON_MODE) {
-		if (algos_map.find(string(argv[argv_idx])) != algos_map.end()) {
-			prog_args.sort_funcs[1] = algos_map[argv[argv_idx]];
+		if (algos_comp_map.find(string(argv[argv_idx])) != algos_comp_map.end()) {
+			prog_args.sort_funcs_comp[1] = algos_comp_map[argv[argv_idx]];
+			prog_args.sort_funcs_time[1] = algos_time_map[argv[argv_idx]];
 			prog_args.algo_name[1] = getSortName(argv[argv_idx]);
 		}
 		argv_idx++;
@@ -191,34 +207,40 @@ vector<type> generateDataSet(ArgValue input_order, int input_size) {
 
 
 void algorithmMode(ProgramArguments prog_args) {
-	vector<type> data_set;
+	vector<type> original_data_set;
+	vector<type> copy_data_set;
 	ull comp_count;
-	p_func sort_func = prog_args.sort_funcs[0];
+	p_func_comp sort_func_comp = prog_args.sort_funcs_comp[0];
+	p_func_time sort_func_time = prog_args.sort_funcs_time[0];
 
 	cout << "Algorithm: " << prog_args.algo_name[0] << endl;
 
 	if (prog_args.input_mode == INP_FILE) {		// input file, for command 1
-		data_set = readFile(prog_args.input_file);
+		original_data_set = readFile(prog_args.input_file);
 		comp_count = 0;
 
 		cout << "Input file: " << prog_args.input_file << endl << endl;
-		cout << "Input size: " << data_set.size() << endl;
+		cout << "Input size: " << original_data_set.size() << endl;
 		cout << "--------------------------" << endl;
 
-		// run sort
-		auto start = chrono::high_resolution_clock::now();
-		sort_func(data_set, comp_count);
-		auto end = chrono::high_resolution_clock::now();
-		std::chrono::duration<double> run_time = end - start;
-
-		// output
-		if (prog_args.output_para & OUT_TIME)
+		// run sort for counting time
+		if (prog_args.output_para & OUT_TIME) {
+			copy_data_set = original_data_set;
+			auto start = chrono::high_resolution_clock::now();
+			sort_func_time(copy_data_set);
+			auto end = chrono::high_resolution_clock::now();
+			std::chrono::duration<double> run_time = end - start;
 			cout << "Running time: " << run_time.count() << "s" << endl;
-		if (prog_args.output_para & OUT_COMPARISON)
+		}
+		// run sort for counting comparison
+		if (prog_args.output_para & OUT_COMPARISON) {
+			copy_data_set = original_data_set;
+			sort_func_comp(copy_data_set, comp_count);
 			cout << "Comparisons: " << addComma(comp_count) << endl;
+		}
 
 		// write sorted data
-		writeFile("output.txt", data_set);
+		writeFile("output.txt", copy_data_set);
 	}
 
 	else if (prog_args.input_mode == INP_GENERATED) {	// genarate input, for command 2 and 3
@@ -230,29 +252,31 @@ void algorithmMode(ProgramArguments prog_args) {
 			if (prog_args.input_order & order_types[i]) {	// the order type indicator bit is 1 in input_order
 				cout << "Input order: " << order_names[i] << endl;
 				cout << "--------------------------" << endl;
-				data_set = generateDataSet(order_types[i], prog_args.input_size);
+				original_data_set = generateDataSet(order_types[i], prog_args.input_size);
 				comp_count = 0;
 
 				// write data set
-				if (prog_args.input_order == ORDER_ALL) writeFile(string("input_") + to_string(i+1) + string(".txt"), data_set);
-				else writeFile("input.txt", data_set);
+				if (prog_args.input_order == ORDER_ALL) writeFile(string("input_") + to_string(i+1) + string(".txt"), original_data_set);
+				else writeFile("input.txt", original_data_set);
 
-				// run sort
-				auto start = chrono::high_resolution_clock::now();
-				sort_func(data_set, comp_count);
-				auto end = chrono::high_resolution_clock::now();
-				std::chrono::duration<double> run_time = end - start;
-
-				// output
-				if (prog_args.output_para & OUT_TIME)
+				// run sort for counting time
+				if (prog_args.output_para & OUT_TIME) {
+					copy_data_set = original_data_set;
+					auto start = chrono::high_resolution_clock::now();
+					sort_func_time(copy_data_set);
+					auto end = chrono::high_resolution_clock::now();
+					std::chrono::duration<double> run_time = end - start;
 					cout << "Running time: " << run_time.count() << "s" << endl;
-				if (prog_args.output_para & OUT_COMPARISON)
+				}
+				// run sort for counting comparison
+				if (prog_args.output_para & OUT_COMPARISON) {
+					copy_data_set = original_data_set;
+					sort_func_comp(copy_data_set, comp_count);
 					cout << "Comparisons: " << addComma(comp_count) << endl;
-				
+				}
 				cout << endl;
-
 				// write sorted data
-				writeFile("output.txt", data_set);
+				writeFile("output.txt", copy_data_set);
 			}
 		}
 	}
@@ -274,19 +298,25 @@ void comparisonMode(ProgramArguments prog_args) {
 		cout << "Input size: " << original_data_set.size() << endl;
 		cout << "--------------------------" << endl;
 
-		// run sort
+		// run sort for counting time
 		for (int i = 0; i < 2; i++) {
+			// run sort for counting time
+			p_func_time sort_func_time = prog_args.sort_funcs_time[i];
 			copy_data_set = original_data_set;
-			comp_count[i] = 0;
-			p_func sort_func = prog_args.sort_funcs[i];
 			auto start = chrono::high_resolution_clock::now();
-			sort_func(copy_data_set, comp_count[i]);
+			sort_func_time(copy_data_set);
 			auto end = chrono::high_resolution_clock::now();
 			run_time[i] = end - start;
 		}
-
-		// output
 		cout << "Running time: " << run_time[0].count() << "s | " << run_time[1].count() << "s" << endl;
+
+		// run sort for counting comparison
+		for (int i = 0; i < 2; i++)  {
+			p_func_comp sort_func_comp = prog_args.sort_funcs_comp[i];
+			comp_count[i] = 0;
+			copy_data_set = original_data_set;
+			sort_func_comp(copy_data_set, comp_count[i]);
+		}
 		cout << "Comparisons: " << addComma(comp_count[0]) << " | " << addComma(comp_count[1]) << endl;
 	}
 
@@ -304,19 +334,25 @@ void comparisonMode(ProgramArguments prog_args) {
 				// write data set
 				writeFile("input.txt", original_data_set);
 
-				// run sort
+				// run sort for counting time
 				for (int i = 0; i < 2; i++) {
+					// run sort for counting time
+					p_func_time sort_func_time = prog_args.sort_funcs_time[i];
 					copy_data_set = original_data_set;
-					comp_count[i] = 0;
-					p_func sort_func = prog_args.sort_funcs[i];
 					auto start = chrono::high_resolution_clock::now();
-					sort_func(copy_data_set, comp_count[i]);
+					sort_func_time(copy_data_set);
 					auto end = chrono::high_resolution_clock::now();
 					run_time[i] = end - start;
 				}
-
-				// output
 				cout << "Running time: " << run_time[0].count() << "s | " << run_time[1].count() << "s" << endl;
+				
+				// run sort for counting comparison
+				for (int i = 0; i < 2; i++)  {
+					p_func_comp sort_func_comp = prog_args.sort_funcs_comp[i];
+					comp_count[i] = 0;
+					copy_data_set = original_data_set;
+					sort_func_comp(copy_data_set, comp_count[i]);
+				}
 				cout << "Comparisons: " << addComma(comp_count[0]) << " | " << addComma(comp_count[1]) << endl;
 				
 				cout << endl;
