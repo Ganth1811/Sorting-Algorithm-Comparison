@@ -23,7 +23,13 @@ void shellSort(vector<type>&, ull&);
 void countingSort(vector<type>&,ull&);
 void flashSort(vector<type>&, ull&);
 
-// Non-counter version
+void optimizedBubbleSort(vector<type>&, ull&);
+void binaryInsertionSort(vector<type>&, ull&);
+void randomizedQuickSort(vector<type>&, ull&);
+void medianQuickSort(vector<type>&, ull&);
+
+// No-counter version
+
 void bubbleSort(vector<type>&);
 void insertionSort(vector<type>&);
 void selectionSort(vector<type>&);
@@ -36,3 +42,8 @@ void shakerSort(vector<type>&);
 void shellSort(vector<type>&);
 void countingSort(vector<type>&);
 void flashSort(vector<type>&);
+
+void optimizedBubbleSort(vector<type>&);
+void binaryInsertionSort(vector<type>&);
+void randomizedQuickSort(vector<type>&);
+void medianQuickSort(vector<type>&);

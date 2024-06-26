@@ -16,7 +16,11 @@ unordered_map<string, p_func_comp> algos_comp_map = {
 	{"shaker-sort", shakerSort},
 	{"shell-sort", shellSort},
 	{"counting-sort", countingSort},
-	{"flash-sort", flashSort}
+	{"flash-sort", flashSort},
+	{"optimized-bubble-sort", optimizedBubbleSort},
+	{"binary-insertion-sort", binaryInsertionSort},
+	{"randomized-quick-sort", randomizedQuickSort},
+	{"median-quick-sort", medianQuickSort}
 };
 
 unordered_map<string, p_func_time> algos_time_map = {
@@ -30,7 +34,11 @@ unordered_map<string, p_func_time> algos_time_map = {
 	{"shaker-sort", shakerSort},
 	{"shell-sort", shellSort},
 	{"counting-sort", countingSort},
-	{"flash-sort", flashSort}
+	{"flash-sort", flashSort},
+	{"optimized-bubble-sort", optimizedBubbleSort},
+	{"binary-insertion-sort", binaryInsertionSort},
+	{"randomized-quick-sort", randomizedQuickSort},
+	{"median-quick-sort", medianQuickSort}
 };
 
 unordered_map<string, ArgValue> order_map = {

@@ -1,37 +1,37 @@
 #include "sorting_algorithm.h"
 
-void heapify(vector<type>& v, int heap_size, int i, ull& comparision_count) {
+void heapify(vector<type>& v, int heap_size, int i, ull& comparison_count) {
 	int left = 2 * i + 1;
 	int right = 2 * i + 2;
 	int largest = i;
 
-	if (++comparision_count && left < heap_size && ++comparision_count &&
+	if (++comparison_count && left < heap_size && ++comparison_count &&
 		v[left] > v[largest]) {
 		largest = left;
 	}
-	if (++comparision_count && right < heap_size && ++comparision_count &&
+	if (++comparison_count && right < heap_size && ++comparison_count &&
 		v[right] > v[largest]) {
 		largest = right;
 	}
-	if (++comparision_count && largest != i) {
+	if (++comparison_count && largest != i) {
 		swap(v[i], v[largest]);
-		heapify(v, heap_size, largest, comparision_count);
+		heapify(v, heap_size, largest, comparison_count);
 	}
 }
 
-void buildHeap(vector<type>& v, int heap_size, ull& comparision_count) {
-	for (int i = heap_size / 2 - 1; ++comparision_count && i >= 0; i--) {
-		heapify(v, heap_size, i, comparision_count);
+void buildHeap(vector<type>& v, int heap_size, ull& comparison_count) {
+	for (int i = heap_size / 2 - 1; ++comparison_count && i >= 0; i--) {
+		heapify(v, heap_size, i, comparison_count);
 	}
 }
 
-void heapSort(vector<type>& v, ull& comparision_count) {
+void heapSort(vector<type>& v, ull& comparison_count) {
 	int heap_size = v.size();
 
-	buildHeap(v, heap_size, comparision_count);
-	for (int i = heap_size - 1; ++comparision_count && i >= 1; i--) {
+	buildHeap(v, heap_size, comparison_count);
+	for (int i = heap_size - 1; ++comparison_count && i >= 1; i--) {
 		swap(v[i], v[0]);
-		heapify(v, i, 0, comparision_count);
+		heapify(v, i, 0, comparison_count);
 	}
 }
 

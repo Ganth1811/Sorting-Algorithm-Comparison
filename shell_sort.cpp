@@ -1,14 +1,14 @@
 #include "sorting_algorithm.h"
 
-void shellSort(vector<type>& v, ull& comparision_count) {
+void shellSort(vector<type>& v, ull& comparison_count) {
 	int size = v.size();
 
-	for (int gap = size / 2; ++comparision_count && gap > 0; gap /= 2) {
-		for (int i = gap; ++comparision_count && i < size; i++) {
+	for (int gap = size / 2; ++comparison_count && gap > 0; gap /= 2) {
+		for (int i = gap; ++comparison_count && i < size; i++) {
 			int key = v[i];
 			int j = i - gap;
 
-			while (++comparision_count && j >= 0 && ++comparision_count &&
+			while (++comparison_count && j >= 0 && ++comparison_count &&
 				   v[j] > key) {
 				v[j + gap] = v[j];
 				j = j - gap;

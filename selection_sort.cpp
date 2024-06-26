@@ -1,18 +1,18 @@
 #include "sorting_algorithm.h"
 
-void selectionSort(vector<type>& v, ull& comparision_count) {
+void selectionSort(vector<type>& v, ull& comparison_count) {
 	int size = v.size();
 	
-	for (int i = 0; ++comparision_count && i < size - 1; i++) {
+	for (int i = 0; ++comparison_count && i < size - 1; i++) {
 		int min_id = i;
 
-		for (int j = i + 1; ++comparision_count && j < size; j++) {
-			if (++comparision_count && v[j] < v[min_id]) {
+		for (int j = i + 1; ++comparison_count && j < size; j++) {
+			if (++comparison_count && v[j] < v[min_id]) {
                 min_id = j;
             }
 		}
 
-		if (++comparision_count && min_id != i) {
+		if (++comparison_count && min_id != i) {
             swap(v[i], v[min_id]);
         }
 	}
